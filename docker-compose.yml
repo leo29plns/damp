@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+    damp:
+        image: leo29plns/damp:latest
+        ports:
+            - "8080:80"
+            - "3306:3306"
+        volumes:
+            - /Users/leo29plns/Documents/GitHub/:/var/www/html
+            - apache-config:/etc/apache2
+            - php-config:/etc/php/7.4/apache2
+
+volumes:
+    apache-config:
+    php-config:
