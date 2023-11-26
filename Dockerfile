@@ -8,6 +8,10 @@ RUN apt-get update && \
 RUN echo "Include /etc/phpmyadmin/apache.conf" >> /etc/apache2/apache2.conf
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+RUN a2enmod rewrite
+
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
 EXPOSE 80
 EXPOSE 3306
 
@@ -19,5 +23,7 @@ RUN echo '#!/bin/bash' > /usr/local/bin/damp && \
     echo '    echo "Usage: damp reload"' >> /usr/local/bin/damp && \
     echo 'fi' >> /usr/local/bin/damp && \
     chmod +x /usr/local/bin/damp
+
+RUN damp reload
 
 CMD ["apachectl", "-D", "FOREGROUND"]
